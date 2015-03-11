@@ -1,10 +1,10 @@
 
-var Q = require("q");
+var Bluebird = require("bluebird");
 
 
 function promiseFromStreams(streams) {
-    return Q.all(streams.map(function(stream) {
-        return Q.promise(function(resolve, reject) {
+  return Bluebird.map(streams, function(stream) {
+        return new Bluebird(function(resolve, reject) {
 
             // process.stdout and process.stderr are not closed or ended
             // after piping like other streams. So we must resolve them
@@ -31,15 +31,15 @@ function promiseFromStreams(streams) {
             // to the underlying system, this event is emitted.
             stream.on("finish", resolve);
         });
-    }));
+    });
 }
 
 function promisePipe() {
     var streams = Array.prototype.slice.call(arguments);
 
-    var promise = promiseFromStreams(streams).then(function() {
-        return Q(streams);
-    });
+  var promise = promiseFromStreams(streams).then(function() {
+    return streams;
+  });
 
     var streamsStack = Array.prototype.slice.call(arguments);
     var current = streamsStack.shift();

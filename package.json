@@ -21,9 +21,9 @@
     "url": "https://github.com/epeli/node-promisepipe/issues"
   },
   "dependencies": {
-    "q": "~0.9.7"
+    "bluebird": "^2.9.13"
   },
   "devDependencies": {
-    "mocha": "~1.13.0"
+    "mocha": "^2.2.1"
   }
 }

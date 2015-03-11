@@ -66,7 +66,7 @@ describe("promisePipe", function() {
         var input = fs.createReadStream("bad");
         var output = fs.createWriteStream(OUTPUT);
 
-        promisePipe(input, output).fail(function(err) {
+        promisePipe(input, output).catch(function(err) {
             assert(err);
             assert.equal(err.originalError.code, "ENOENT");
             assert.equal(err.source, input);
@@ -78,7 +78,7 @@ describe("promisePipe", function() {
         var input = fs.createReadStream(INPUT);
         var output = fs.createWriteStream("/bad");
 
-        promisePipe(input, output).fail(function(err) {
+        promisePipe(input, output).catch(function(err) {
             assert(err);
             assert.equal(err.originalError.code, "EACCES");
             done();
@@ -106,7 +106,7 @@ describe("promisePipe", function() {
         var input = fs.createReadStream(INPUT + ".x");
         var output = fs.createWriteStream(OUTPUT);
 
-        promisePipe(input, new Upcase(), output).fail(function(err) {
+        promisePipe(input, new Upcase(), output).catch(function(err) {
             assert(err);
             assert.equal(err.originalError.message, "X is not allowed");
             done();
